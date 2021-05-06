@@ -1,0 +1,42 @@
+
+.ClangBinFolder     = 'C:/Program Files/LLVM/bin'
+
+.Compiler           = '$ClangBinFolder$/clang++.exe'
+.Linker             = '$ClangBinFolder$/lld-link.exe'
+
+.CompilerOptions    = ' -c "%1" -o "%2" '
+                    + ' -std=c++20'
+                    + ' -g'
+                    + ' -Werror -Wall -Wextra'
+
+.CompilerInputPath  = 'Src\'
+.CompilerOutputPath = 'Obj\'
+
+.BaseIncludePaths   = ' -I"./"'
+
+.LibPaths       = ' /LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.19041.0/um/x64"'
+                + ' /LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.19041.0/ucrt/x64"'
+                + ' /LIBPATH:"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29910/lib/x64"'
+
+.LinkerOptions  = ' "%1" /out:"%2"'
+                + ' /wx'
+                + .LibPaths
+                + ' libcmt.lib'
+                + ' kernel32.lib'
+                + ' d3d12.lib'
+                + ' dxgi.lib'
+                + ' User32.lib'
+
+
+ObjectList( 'CppDX12Triangle-Lib' ) { }
+
+Executable( 'CppDX12Triangle' )
+{
+    .Libraries      = 'CppDX12Triangle-Lib'
+    .LinkerOutput   = 'CppDX12Triangle.exe'
+}
+
+Alias( 'all' )
+{
+    .Targets = { 'CppDX12Triangle' }
+}
